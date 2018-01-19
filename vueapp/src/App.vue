@@ -55,16 +55,18 @@ export default {
     });
 
     Auth0.handleAuthCallback();
-    //this.handleAuthentication();
+    this.handleAuthentication();
     this.authenticated = false;
-    Auth0.subscribe((authState)=>{
+    
+    /*Auth0.subscribe((authState)=>{
       console.log("auth state: " + authState);
       this.authenticated = authState;
       if(authState) Auth0.getProfile();
-    });
-    /*auth.authNotifier.on('authChange', authState => {
+    });*/
+    
+    auth.authNotifier.on('authChange', authState => {
       this.authenticated = authState.authenticated
-    })*/
+    })
 
     return {
       authenticated: false,
@@ -73,24 +75,24 @@ export default {
   },
   methods: {
     login(){
-      Auth0.signIn();
-      //auth.login();
+      //Auth0.signIn();
+      auth.login();
     },
     handleAuthentication(){
-      Auth0.handleAuthCallback();
-      //auth.handleAuthentication();
+      //Auth0.handleAuthCallback();
+      auth.handleAuthentication();
     },
     logout(){
-      Auth0.signOut();
-      //auth.logout();
+      //Auth0.signOut();
+      auth.logout();
     },
     private(){
    
       var token = localStorage.getItem('access_token')
       console.log("Calling private endpoint: " + token );
       const url = `${API_URL}/api/private/`;
-      //return axios.get(url, { headers: { Authorization: `Bearer ${AuthService.getAuthToken()}` }}).then( (response) => { console.log(response.data); this.message = response.data || '';});
-      return axios.get(url, { headers: { Authorization: `Bearer ${token}` }}).then( (response) => { console.log(response.data); this.message = response.data || '';});
+      return axios.get(url, { headers: { Authorization: `Bearer ${AuthService.getAuthToken()}` }}).then( (response) => { console.log(response.data); this.message = response.data || '';});
+      //return axios.get(url, { headers: { Authorization: `Bearer ${token}` }}).then( (response) => { console.log(response.data); this.message = response.data || '';});
     }
   }
 }
