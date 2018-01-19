@@ -37,8 +37,6 @@
 
   const auth = new AuthService()
 
-  //const { login, logout, authenticated, authNotifier , handleAuthentication } = auth
-
   export default {
     name: 'app',
     data() {
@@ -53,19 +51,17 @@
       });
 
       Auth0.handleAuthCallback();
-      //this.handleAuthentication();
-      this.authenticated = false;
+
+      let authenticated = false;
+
+      const self = this;
       Auth0.subscribe((authState) => {
-        console.log("auth state: " + authState);
-        this.authenticated = authState;
-        if (authState) Auth0.getProfile();
+        console.log(authState);
+        self.authenticated = authState;
       });
-      /*auth.authNotifier.on('authChange', authState => {
-        this.authenticated = authState.authenticated
-      })*/
 
       return {
-        authenticated: false,
+        authenticated,
         message: ''
       }
     },
@@ -83,8 +79,7 @@
         //auth.logout();
       },
       private() {
-
-        var token = localStorage.getItem('access_token')
+        const token = localStorage.getItem('access_token');
         console.log("Calling private endpoint: " + token);
         const url = `${API_URL}/api/private/`;
         //return axios.get(url, { headers: { Authorization: `Bearer ${AuthService.getAuthToken()}` }}).then( (response) => { console.log(response.data); this.message = response.data || '';});
