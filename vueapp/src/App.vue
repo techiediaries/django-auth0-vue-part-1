@@ -45,16 +45,16 @@ export default {
   name: 'app',
   data () {
 
-    Auth0.configure({
+    /*Auth0.configure({
         domain: 'techiediaries.auth0.com',
         audience: 'https://djangovuedemo.techiediaries.com',
         clientID: 'TcHzYEyEzpJ0gYtYVyavXXjidRjQ7Yqw',
         redirectUri: 'http://localhost:8080',
         responseType: 'token id_token',
         scope: 'openid profile'
-    });
+    });*/
 
-    Auth0.handleAuthCallback();
+    //Auth0.handleAuthCallback();
     this.handleAuthentication();
     this.authenticated = false;
     
